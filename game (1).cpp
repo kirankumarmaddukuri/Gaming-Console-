@@ -66,13 +66,15 @@ public:
     }
     int GetHighScore() {
         ifstream highScoreFileIn(highScoreFileName);
-
-        int existingHighScore;
-        highScoreFileIn >> existingHighScore;
+        int existingHighScore = 0;  // Initialize to avoid garbage values
+    
+        if (highScoreFileIn) { // Ensure file exists and is readable
+            highScoreFileIn >> existingHighScore;
+            highScoreFileIn.close();
+        }
         return existingHighScore;
-        highScoreFileIn.close();
     }
-
+    
     void Draw() {
         system("cls");
 
@@ -468,19 +470,18 @@ public:
         cout << "Thanks for playing!\n";
     }
 private:
-    string printChoice(Choice choice) {
-        switch (choice) {
-            case ROCK:
-                return "Rock";
-                break;
-            case PAPER:
-                return "Paper";
-                break;
-            case SCISSORS:
-                return "Scissors";
-                break;
-        }
+private:
+string printChoice(Choice choice) 
+{
+    switch (choice) {
+        case ROCK:
+            return "Rock";
+        case PAPER:
+            return "Paper";
+        case SCISSORS:
+            return "Scissors";
     }
+}
     Choice getPlayerChoice(int playerNumber) {
         cout << "Player " << playerNumber << ", enter your choice (1 for Rock, 2 for Paper, 3 for Scissors): ";
         int choice;
@@ -539,4 +540,5 @@ int main()
             return 0;
         }
     }
-}
+} 
+
